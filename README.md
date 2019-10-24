@@ -1,3 +1,7 @@
+# LoRa Device Model
+- Wireless Gateway Device: WINEXT GW1000 Gateway [LoRa WINEXT GW1000 Gateway](http://www.winext.cn/product/showproduct.php?lang=en&id=59)
+- Parking Sensor: WINEXT [WINEXT AN-101D Parking Sensor](http://www.winext.cn/product/product.php?lang=en&class2=58)
+
 # LoRa Server Docker setup
 
 This repository contains a skeleton to setup the Lora Server

@@ -152,3 +152,4 @@ Fields marked with an **X** are implemented by LoRa (App) Server.
 ### References:
 - [AN-101D surface-mounted geomagnetic parking sensor](https://drive.google.com/drive/folders/1ekKc2jb-nUbZp3KpUDWwjUzPk5H_6ADi)
 - [Gateway Manual](https://drive.google.com/drive/folders/1F3StzJmoC8_WsGZHhBpujz9ZJexIz7er)
+- [https://loraserver.io](https://loraserver.io)

@@ -75,6 +75,7 @@ A device-profile defines the device capabilities and boot parameters
 that are needed by the network-server for setting the LoRaWAN radio
 access service. These information elements shall be provided by the
 end-device manufacturer.
+-  Select LoRaWAN MAC version 1.0.2 for parking sensor
 
 When creating a device-profile, LoRa App Server will create the actual
 profile on the selected network-server, and will keep a reference record
@@ -152,8 +153,79 @@ Fields marked with an **X** are implemented by LoRa (App) Server.
 - [ ] **Supports32bitFCnt** End-Device uses 32bit FCnt (mandatory for LoRaWAN 1.0 End-Device) (always set to `true`)
 
 
+## Add Application
+- Click the application tab
+- Click Create application
+- Enter application name, description
+- Select service profile
+- Select payload coded (left none if nothing)
+- Click create application
+
+## Add device
+- Click on the application tab and select appliaction
+- Click on the device tab and click create
+- Enter device name, description and EUI (should be available from manufacturer)
+- Select device profile (For parking sensor select device profile with LoRaWAN MAC version 1.0.2)
+- Add any variable or tag if required. leave it if empty
+- Click `Create Device` 
+
+## Configure Device
+ - Go to the device tab of application
+ - Select the device
+ - Select `Keys(OTTA)` tab
+ - Enter Application key (Should be available from manufaturer) 
+ - After configuration click `Device Data` tab to see device data for this particular device
+ 
+## Callback Service
+  - Click Application menu from side bar
+  - Select the application
+  - Click `Integrations` tab
+  - Click `Create`
+  - Select kind of integration you want. If you are unsure, select `HTTP integrations`
+  - If selected `HTTP integrations` You will be required to fill a number of url. When the event occurs a http request will be sent to the appropirate url.
+   - For sensor data, this could be one way to recieve data from sensors
+ ## API
+   - go to `http://{lora-app-server-host}:{lora-app-server-port}/api`
+   - You can see the list of available API provided for the system.
+   - In the top right, you will see a JWT Token field.
+   - Enter JWT token in that field and try out the api and responses
+   - For more information visit : [API Docs](https://www.loraserver.io/lora-app-server/integrate/api/)
+
+## JWT Token generation
+  - The json should look something like the following:
+  ```
+  {
+	  "iss": "lora-app-server",      // issuer of the claim
+  	"aud": "lora-app-server",      // audience for which the claim is intended
+  	"nbf": 1489566958,             // unix time from which the token is valid
+  	"exp": 1489653358,             // unix time when the token expires
+  	"sub": "user",                 // subject of the claim (an user)
+	  "username": "admin"            // username the client claims to be
+  }
+  ```
+  - Sign the json with `jwt-secret` specified in `.toml` file
+  - Paste the JWT token to API page and test out the available apis
+
+
+### AN 101D parking sensor data (Hear beat or status change) decode
+ - The data from the device will look something like `gH6dh4mDvwqMpA==`
+ - It's a base64 encrypted string. Convert it to hex. You will recieve something like `807e9d878983bf0a8ca4`
+ - Convert that decrypted hex code to binary array. It should look something like the following.
+ `1000 0000 0111 1110 1001 1101 1000 0111 1000 1001 1000 0011 1000 1001 1000 0011 1000 1001 1000 0011`
+ - Details description of bits are provided below
+ ```
+    1000 0000 < frametype + reserved + transimission direction
+    0111 1110 1001 1101 < X axis data
+    1000 0111 1000 1001 < Y axis data
+    1000 0011 1000 1001 < Z axis data
+    1000 0011 1000 1001 < Temperature
+    1000 0011 < parkflag + battery voltage
+ ```
+ - For more information on data decoding, consult [AN-101D surface-mounted geomagnetic parking sensor](https://drive.google.com/drive/folders/1ekKc2jb-nUbZp3KpUDWwjUzPk5H_6ADi)
 
 ### References:
 - [AN-101D surface-mounted geomagnetic parking sensor](https://drive.google.com/drive/folders/1ekKc2jb-nUbZp3KpUDWwjUzPk5H_6ADi)
 - [Gateway Manual](https://drive.google.com/drive/folders/1F3StzJmoC8_WsGZHhBpujz9ZJexIz7er)
 - [https://loraserver.io](https://loraserver.io)
+
+

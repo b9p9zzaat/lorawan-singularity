@@ -1,6 +1,9 @@
 # LoRa Device Model
 - Wireless Gateway Device: WINEXT GW1000 Gateway [LoRa WINEXT GW1000 Gateway](http://www.winext.cn/product/showproduct.php?lang=en&id=59)
-- Parking Sensor: WINEXT [WINEXT AN-101D Parking Sensor](http://www.winext.cn/product/product.php?lang=en&class2=58)
+- Parking Sensor: 
+  - Type 1: WINEXT [WINEXT AN-101D Parking Sensor](http://www.winext.cn/product/product.php?lang=en&class2=58) 
+  - Type 2: [DO200 Ultrasonic + Magnetic Parking Occupation Sensor](http://www.dingtek.com/product/73-en.html)
+
 
 # LoRa Server Docker setup
 
@@ -75,7 +78,7 @@ A device-profile defines the device capabilities and boot parameters
 that are needed by the network-server for setting the LoRaWAN radio
 access service. These information elements shall be provided by the
 end-device manufacturer.
--  Select LoRaWAN MAC version 1.0.2 for parking sensor
+-  Select LoRaWAN MAC version 1.0.2 for parking sensor Type 1
 
 When creating a device-profile, LoRa App Server will create the actual
 profile on the selected network-server, and will keep a reference record
@@ -165,7 +168,7 @@ Fields marked with an **X** are implemented by LoRa (App) Server.
 - Click on the application tab and select appliaction
 - Click on the device tab and click create
 - Enter device name, description and EUI (should be available from manufacturer)
-- Select device profile (For parking sensor select device profile with LoRaWAN MAC version 1.0.2)
+- Select device profile (For parking sensor Type 1 select device profile with LoRaWAN MAC version 1.0.2)
 - Add any variable or tag if required. leave it if empty
 - Click `Create Device` 
 
@@ -207,7 +210,7 @@ Fields marked with an **X** are implemented by LoRa (App) Server.
   - Paste the JWT token to API page and test out the available apis
 
 
-### AN 101D parking sensor data (Hear beat or status change) decode
+### For Type-1 parking sensor data (Hear beat or Status change) decode
  - The data from the device will look something like `gH6dh4mDvwqMpA==`
  - It's a base64 encrypted string. Convert it to hex. You will recieve something like `807e9d878983bf0a8ca4`
  - Convert that decrypted hex code to binary array. It should look something like the following.
@@ -222,6 +225,9 @@ Fields marked with an **X** are implemented by LoRa (App) Server.
     1000 0011 < parkflag + battery voltage
  ```
  - For more information on data decoding, consult [AN-101D surface-mounted geomagnetic parking sensor](https://drive.google.com/drive/folders/1ekKc2jb-nUbZp3KpUDWwjUzPk5H_6ADi)
+
+### For Type-2 parking sensor data decode
+ - TO BE ADDED
 
 ### References:
 - [AN-101D surface-mounted geomagnetic parking sensor](https://drive.google.com/drive/folders/1ekKc2jb-nUbZp3KpUDWwjUzPk5H_6ADi)
